@@ -284,3 +284,54 @@ Optimizing ETL (Extract, Transform, Load) performance is crucial for efficiently
 
 12. **Regular Monitoring and Tuning:**
     - Implement a robust monitoring system to track ETL performance metrics. Regularly analyze these metrics and fine-tune the ETL processes based on changing data volumes, patterns, or system configurations.
+
+Q#006. How do you implement change data capture (CDC) to efficiently capture and apply updates to data sources?
+Change Data Capture (CDC) is a technique used to identify and capture changes made to data so that only the modified data needs to be processed during ETL (Extract, Transform, Load) operations. Implementing CDC efficiently involves several steps:
+
+1. **Choose a CDC Method:**
+   - CDC can be implemented using different methods, such as Timestamp-Based CDC, Change Value CDC, or Log-Based CDC. Choose the method that best fits your database technology and requirements.
+
+2. **Identify Fields for CDC:**
+   - Determine which fields in your tables will be used to track changes. These are usually timestamp columns or flags that indicate when a record was last modified.
+
+3. **Timestamp Columns:**
+   - If using Timestamp-Based CDC, ensure that your tables have timestamp columns that are updated whenever a record is inserted or updated. These columns are used to identify the last modification time.
+
+4. **Change Tracking Columns:**
+   - If using Change Value CDC, identify columns that are likely to change frequently. These columns are monitored, and changes are captured.
+
+5. **Database Triggers (Optional):**
+   - In some cases, you may use database triggers to automatically update timestamp or change tracking columns when a record is modified. However, triggers can impact performance, so use them judiciously.
+
+6. **Log-Based CDC:**
+   - For Log-Based CDC, leverage the transaction log or redo log of the database. This method captures changes directly from the database logs, providing a low-impact and efficient way to track modifications.
+
+7. **Capture and Store Initial State:**
+   - Capture the initial state of the data before any changes occur. This is necessary for the CDC process to identify modifications correctly during subsequent runs.
+
+8. **Scheduled Polling or Event-Driven CDC:**
+   - Implement a scheduled polling mechanism or an event-driven approach to check for changes at regular intervals or in response to specific events.
+
+9. **Incremental ETL:**
+   - During the ETL process, implement logic to retrieve only the records that have changed since the last ETL run. This can be achieved by comparing the timestamp or change tracking columns.
+
+10. **High Watermark:**
+    - Use a high-watermark approach to keep track of the last time CDC was applied. This helps in identifying records that have changed since the last extraction.
+
+11. **Handling Deletes:**
+    - Determine how to handle deleted records. Some CDC implementations also track deletions, while others rely on a soft delete mechanism or tombstone records.
+
+12. **Error Handling and Logging:**
+    - Implement robust error handling and logging mechanisms to capture any issues during the CDC process. This ensures visibility into the success or failure of CDC operations.
+
+13. **Consideration for Large Tables:**
+    - For large tables, consider partitioning the data or using batch processing techniques to optimize the CDC process.
+
+14. **Testing:**
+    - Thoroughly test the CDC implementation with various scenarios, including insertions, updates, and deletions. Verify that the CDC process accurately captures and applies changes.
+
+15. **Monitoring and Maintenance:**
+    - Establish monitoring for the CDC process to ensure it runs smoothly. Regularly maintain and optimize the CDC process based on changing data patterns or system configurations.
+
+16. **Documentation:**
+    - Document the CDC implementation, including the chosen method, fields for change tracking, and any specific considerations or configurations. This documentation is valuable for maintenance and knowledge transfer.
