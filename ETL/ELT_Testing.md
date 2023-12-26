@@ -335,3 +335,46 @@ Change Data Capture (CDC) is a technique used to identify and capture changes ma
 
 16. **Documentation:**
     - Document the CDC implementation, including the chosen method, fields for change tracking, and any specific considerations or configurations. This documentation is valuable for maintenance and knowledge transfer.
+
+Q#007. Write a query to calculate aggregate values (sum, average, count, etc.) across different dimensions.
+Certainly! To provide you with a specific query, I would need more details about your database schema and the tables involved. However, I can give you a generic example query that you can adapt to your specific database structure. Let's assume you have a hypothetical table named `sales` with columns such as `amount`, `product_category`, and `sale_date`. Here's an example query to calculate aggregate values across different dimensions:
+
+```sql
+-- Calculate total sales amount for each product category
+SELECT
+    product_category,
+    SUM(amount) AS total_sales_amount
+FROM
+    sales
+GROUP BY
+    product_category;
+
+-- Calculate average sales amount for each product category
+SELECT
+    product_category,
+    AVG(amount) AS average_sales_amount
+FROM
+    sales
+GROUP BY
+    product_category;
+
+-- Calculate the count of sales for each product category
+SELECT
+    product_category,
+    COUNT(*) AS sales_count
+FROM
+    sales
+GROUP BY
+    product_category;
+
+-- Calculate total sales amount for each month
+SELECT
+    DATE_TRUNC('month', sale_date) AS sales_month,
+    SUM(amount) AS total_sales_amount
+FROM
+    sales
+GROUP BY
+    sales_month;
+```
+
+Please replace `sales`, `amount`, `product_category`, and `sale_date` with your actual table and column names. Adjust the grouping criteria and aggregate functions based on your specific requirements and dimensions.
