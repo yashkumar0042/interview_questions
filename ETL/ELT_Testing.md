@@ -1,4 +1,4 @@
-Q#001. What strategies do you use to create granular and reusable test cases across different modules?
+*Q#001. What strategies do you use to create granular and reusable test cases across different modules?*
 
 As a Quality Engineer specializing in ETL (Extract, Transform, Load) testing, creating granular and reusable test cases is crucial for efficient testing. Here are some strategies you can employ:
 
@@ -47,3 +47,85 @@ As a Quality Engineer specializing in ETL (Extract, Transform, Load) testing, cr
     - This ensures that the latest and most relevant test cases are used for testing.
 
 By employing these strategies, you can enhance the efficiency and effectiveness of your ETL testing efforts while promoting the creation of granular and reusable test cases across different modules.
+
+*Q#002. What are the different types of ETL testing?*
+
+ETL (Extract, Transform, Load) testing is a critical phase in the data warehouse and business intelligence lifecycle. It ensures that data is extracted from source systems, transformed according to business rules, and loaded into the target data warehouse without errors. There are several types of ETL testing, each focusing on specific aspects of the ETL process. Here are the key types:
+
+1. **Data Extraction Testing:**
+   - Ensures that data is accurately extracted from source systems.
+   - Validates that the correct data is identified, pulled, and loaded into the ETL process.
+   - **Example:** Verify that data is accurately extracted from the source system. If the source is a relational database, ensure that the specified tables and columns are being extracted without missing or duplicating records.
+
+2. **Data Transformation Testing:**
+   - Focuses on the transformation logic applied to the extracted data.
+   - Verifies that data is transformed according to business rules and requirements.
+   - Checks for accuracy, completeness, and correctness of data transformations.
+   - **Example:** Suppose the transformation logic involves converting dates from one format to another. Validate that the transformation is correctly applied by comparing the transformed dates in the target system with the expected results.
+
+3. **Data Loading Testing:**
+   - Validates the loading process, ensuring that data is loaded into the target system correctly.
+   - Verifies the integrity of the loaded data in terms of relationships, constraints, and structure.
+   - **Example:** Confirm that data is loaded into the target data warehouse without errors. Check that the loaded data matches the source data in terms of counts, and there are no data integrity issues.
+
+4. **Incremental ETL Testing:**
+   - Ensures that only the changed or newly added data is processed during incremental ETL runs.
+   - Validates the handling of updates, inserts, and deletes without impacting existing data.
+   - **Example:** For incremental loads, ensure that only the new or changed records are processed. Test by introducing new records in the source system and verifying that only those records are loaded into the target during the next incremental ETL run.
+
+5. **Batch Processing Testing:**
+   - Focuses on testing ETL processes in batch mode, where data is processed in scheduled batches.
+   - Validates the sequencing, timing, and completeness of data processed in each batch.
+   - **Example:** Validate the execution of ETL jobs in batches. Confirm that data is processed in defined batches, and check for any dependencies or sequencing issues between different batch jobs.
+
+6. **Integration Testing:**
+   - Verifies the interaction between different components of the ETL process.
+   - Ensures that data flows seamlessly between extraction, transformation, and loading phases.
+   - **Example:** Check the end-to-end flow of data from extraction to transformation and loading. Ensure that data moves seamlessly between different components, such as from source to staging, and from staging to the data warehouse.
+
+7. **Performance Testing:**
+   - Evaluates the performance of the ETL process under different conditions.
+   - Measures the processing time, throughput, and resource utilization to identify bottlenecks and optimize performance.
+   - **Example:** Measure the time taken for the ETL process to complete under different data volumes. Assess the system's performance by loading a large dataset and analyzing resource utilization to identify any performance bottlenecks.
+
+8. **Error Handling Testing:**
+   - Tests the ETL system's ability to handle errors and exceptions gracefully.
+   - Validates error logging, reporting, and recovery mechanisms.
+   - **Example:** Introduce errors in the source data and verify that the ETL process detects and handles errors appropriately. Check if error logs are generated, and error records are redirected to error tables for further analysis.
+
+9. **Metadata Testing:**
+   - Ensures that metadata, such as table structures, column definitions, and relationships, is correctly handled.
+   - Verifies that metadata changes are reflected in the ETL process.
+   - **Example:** If there are changes in the source database schema, validate that the ETL process adjusts accordingly. Ensure that metadata changes, such as column additions or modifications, are reflected in the ETL mappings.
+
+10. **Data Quality Testing:**
+    - Focuses on the quality of data being processed through the ETL pipeline.
+    - Checks for data accuracy, consistency, completeness, and adherence to data quality standards.
+    - **Example:** Check for data quality issues by validating that data conforms to defined standards. For instance, ensure that numeric fields contain only numeric values, and date fields adhere to the specified format.
+
+11. **Regression Testing:**
+    - Verifies that new changes or enhancements do not negatively impact existing ETL processes.
+    - Involves re-running existing test cases after modifications to ensure backward compatibility.
+	- **Example:** After making enhancements to an existing transformation logic, rerun previous test cases to ensure that the modified logic does not introduce regressions or errors in the ETL process.
+
+12. **User Acceptance Testing (UAT):**
+    - Involves end-users validating that the ETL system meets their business requirements.
+    - Assures that the ETL process aligns with business expectations and goals.
+	- **Example:** End-users validate that the transformed data in the data warehouse aligns with their expectations and business requirements. This involves running queries on the target data and confirming the results.
+
+13. **Operational Testing:**
+    - Focuses on testing aspects related to the day-to-day operation of the ETL system.
+    - Validates scheduling, monitoring, logging, and other operational aspects.
+	- **Example:** Validate the operational aspects of the ETL process, including job scheduling, monitoring, and logging. Ensure that jobs run on time, logs are generated, and monitoring alerts work as expected.
+
+14. **Concurrency Testing:**
+    - Evaluates the ETL system's ability to handle multiple concurrent users or processes.
+    - Verifies that data integrity is maintained when multiple instances of the ETL process are executed simultaneously.
+	- **Example:** Simulate multiple instances of the ETL process running concurrently. Check if data integrity is maintained, and there are no conflicts when multiple processes try to access and update the same data simultaneously.
+
+15. **Dependency Testing:**
+    - Ensures that dependencies between various ETL processes are identified and managed.
+    - Validates that changes in upstream processes do not adversely affect downstream processes.
+    - **Example:** If there are dependencies between ETL jobs, verify that changes in upstream jobs do not negatively impact downstream jobs. For example, ensure that changes in the source system schema are handled gracefully by downstream transformations.
+
+These different types of ETL testing collectively contribute to the overall quality assurance of the ETL process, ensuring accurate and reliable data integration into the data warehouse.
