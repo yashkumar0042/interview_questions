@@ -378,3 +378,46 @@ GROUP BY
 ```
 
 Please replace `sales`, `amount`, `product_category`, and `sale_date` with your actual table and column names. Adjust the grouping criteria and aggregate functions based on your specific requirements and dimensions.
+
+Q#008. Write a query to filter data based on specific conditions and apply sorting or grouping.
+Certainly! Below is a generic example of a SQL query that filters data based on specific conditions and applies sorting or grouping. This example assumes you have a table named `employees` with columns like `employee_id`, `employee_name`, `department`, `salary`, and `hire_date`. Adjust the table and column names as per your actual database schema.
+
+```sql
+-- Filter data based on specific conditions and apply sorting
+
+-- Example 1: Filter employees in the 'Sales' department with a salary greater than 50000, sorted by salary in descending order
+SELECT
+    employee_id,
+    employee_name,
+    department,
+    salary,
+    hire_date
+FROM
+    employees
+WHERE
+    department = 'Sales' AND salary > 50000
+ORDER BY
+    salary DESC;
+
+-- Example 2: Group employees by department and calculate the average salary for each department
+SELECT
+    department,
+    AVG(salary) AS average_salary
+FROM
+    employees
+GROUP BY
+    department;
+
+-- Example 3: Filter employees hired after '2022-01-01' and group them by hire month, showing the count of employees hired in each month
+SELECT
+    DATE_TRUNC('month', hire_date) AS hire_month,
+    COUNT(*) AS hire_count
+FROM
+    employees
+WHERE
+    hire_date > '2022-01-01'
+GROUP BY
+    hire_month;
+```
+
+Please replace `employees`, `employee_id`, `employee_name`, `department`, `salary`, and `hire_date` with your actual table and column names. Adjust the conditions in the `WHERE` clause, the columns in the `SELECT` clause, and the grouping or sorting criteria based on your specific requirements.
