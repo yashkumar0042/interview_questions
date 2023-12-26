@@ -421,3 +421,173 @@ GROUP BY
 ```
 
 Please replace `employees`, `employee_id`, `employee_name`, `department`, `salary`, and `hire_date` with your actual table and column names. Adjust the conditions in the `WHERE` clause, the columns in the `SELECT` clause, and the grouping or sorting criteria based on your specific requirements.
+
+Q#009. Write a query to optimize performance for large datasets (e.g., using indexes, partitioning).
+
+Let's consider a more extensive set of examples for optimizing performance with large datasets, involving various techniques like indexing, partitioning, and query optimization:
+
+### Example 1: Indexing
+
+Assume you have a table named `orders` with columns like `order_id`, `customer_id`, `order_date`, and `total_amount`.
+
+```sql
+-- Create an index on the 'order_date' column
+CREATE INDEX idx_order_date ON orders(order_date);
+
+-- Query using the optimized index
+EXPLAIN ANALYZE
+SELECT
+    order_id,
+    order_date,
+    total_amount
+FROM
+    orders
+WHERE
+    order_date BETWEEN '2022-01-01' AND '2022-12-31'
+ORDER BY
+    order_date DESC;
+```
+
+### Example 2: Composite Index
+
+Assume you frequently query based on both `customer_id` and `order_date`.
+
+```sql
+-- Create a composite index on 'customer_id' and 'order_date'
+CREATE INDEX idx_customer_order_date ON orders(customer_id, order_date);
+
+-- Query using the composite index
+EXPLAIN ANALYZE
+SELECT
+    order_id,
+    order_date,
+    total_amount
+FROM
+    orders
+WHERE
+    customer_id = 123
+    AND order_date BETWEEN '2022-01-01' AND '2022-12-31'
+ORDER BY
+    order_date DESC;
+```
+
+### Example 3: Partitioning
+
+Assume you have a table named `logs` with a timestamp column `log_timestamp`, and you want to partition by months.
+
+```sql
+-- Create a partitioned table by 'log_timestamp'
+CREATE TABLE logs_partitioned (
+    log_id INT,
+    log_timestamp TIMESTAMP,
+    log_message TEXT,
+    PRIMARY KEY (log_id, log_timestamp)
+) PARTITION BY RANGE (EXTRACT(MONTH FROM log_timestamp));
+
+-- Create partitions for each month
+CREATE TABLE logs_partition_01 PARTITION OF logs_partitioned FOR VALUES FROM (1) TO (2);
+CREATE TABLE logs_partition_02 PARTITION OF logs_partitioned FOR VALUES FROM (2) TO (3);
+-- Add more partitions for subsequent months as needed
+
+-- Query using the optimized partitioned table
+EXPLAIN ANALYZE
+SELECT
+    log_id,
+    log_timestamp,
+    log_message
+FROM
+    logs_partitioned
+WHERE
+    log_timestamp BETWEEN '2022-01-01' AND '2022-01-31'
+ORDER BY
+    log_timestamp DESC;
+```
+
+### Example 4: Materialized Views
+
+Assume you frequently calculate aggregates over large datasets.
+
+```sql
+-- Create a materialized view for total sales per day
+CREATE MATERIALIZED VIEW mv_total_sales_per_day AS
+SELECT
+    date_trunc('day', order_date) AS day,
+    SUM(total_amount) AS total_sales
+FROM
+    orders
+GROUP BY
+    day;
+
+-- Query using the materialized view
+EXPLAIN ANALYZE
+SELECT
+    *
+FROM
+    mv_total_sales_per_day
+WHERE
+    day BETWEEN '2022-01-01' AND '2022-12-31'
+ORDER BY
+    day DESC;
+```
+
+### Example 5: Query Optimization
+
+Assume you have a complex query involving multiple joins.
+
+```sql
+-- Original query with joins
+EXPLAIN ANALYZE
+SELECT
+    customers.customer_id,
+    customers.customer_name,
+    orders.order_id,
+    orders.order_date,
+    order_items.product_id,
+    order_items.quantity,
+    order_items.amount
+FROM
+    customers
+JOIN
+    orders ON customers.customer_id = orders.customer_id
+JOIN
+    order_items ON orders.order_id = order_items.order_id
+WHERE
+    customers.customer_id = 123
+ORDER BY
+    orders.order_date DESC;
+```
+
+Optimize the query by fetching only necessary columns and applying conditions early:
+
+```sql
+-- Optimized query
+EXPLAIN ANALYZE
+SELECT
+    c.customer_id,
+    c.customer_name,
+    o.order_id,
+    o.order_date
+FROM
+    customers c
+JOIN
+    orders o ON c.customer_id = o.customer_id
+WHERE
+    c.customer_id = 123
+ORDER BY
+    o.order_date DESC;
+
+-- Fetch additional details as needed in a separate query
+EXPLAIN ANALYZE
+SELECT
+    oi.product_id,
+    oi.quantity,
+    oi.amount
+FROM
+    order_items oi
+JOIN
+    orders o ON oi.order_id = o.order_id
+WHERE
+    o.customer_id = 123;
+```
+
+These examples showcase a variety of optimization techniques. Depending on your specific use case, you may need to tailor these approaches to your database schema, queries, and performance requirements. Always analyze query execution plans (`EXPLAIN ANALYZE`) to ensure the effectiveness of your optimizations.
