@@ -128,7 +128,8 @@ ETL (Extract, Transform, Load) testing is a critical phase in the data warehouse
     - Validates that changes in upstream processes do not adversely affect downstream processes.
     - **Example:** If there are dependencies between ETL jobs, verify that changes in upstream jobs do not negatively impact downstream jobs. For example, ensure that changes in the source system schema are handled gracefully by downstream transformations.
 
-#Q#003. Explain how you built a configurable ETL test automation suite and its impact on efficiency.#
+Q#003. Explain how you built a configurable ETL test automation suite and its impact on efficiency.
+
 **Building a Configurable ETL Test Automation Suite:**
 
 Building a configurable ETL (Extract, Transform, Load) test automation suite involves creating a framework that allows easy customization of test scenarios, data sets, and configurations. This flexibility is essential for accommodating changes in the ETL processes and adapting to different testing requirements. Here's how I approached building such a suite:
